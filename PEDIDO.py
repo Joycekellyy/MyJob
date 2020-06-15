@@ -1,6 +1,8 @@
 import os
+
 days = ['SEGUNDA', 'QUARTA', 'QUINTA']
 daysentrega = ['TERÇA', 'QUINTA', 'SEXTA']
+diasDaSemana = ['SEGUNDA', 'TERÇA', 'QUARTA', 'QUINTA', 'SEXTA']
 precos = []
 
 def moeda(txt):
@@ -32,7 +34,7 @@ while True:
 	name = str(input('Nome do cliente: ')). title()
 	number = input('Número: ')
 	
-#ENTREGA
+#VERIFICAR ENTREGA
 
 	while True:
 		entrega = str(input('Entrega? [S/N]')).upper()
@@ -42,6 +44,7 @@ while True:
 	if entrega == 'S':
 		endereço = input('Endereço: ')
 		print (' ')
+
 #DIA DA FABRICAÇÃO
 	print('-=' * 10)
 	for c, items in enumerate(days):
@@ -58,19 +61,32 @@ while True:
 	print(' ')
 
 #DIA DA ENTREGA
+	if entrega == 'S':
+		print('-=' * 10)
+		for c, items in enumerate(daysentrega):
+			print('{} - {}'.format(c+1, items))
+		print('-=' * 10)
+		diaentrega = int(input('Dia da entrega: '))
 
-	print('-=' * 10)
-	for c, items in enumerate(daysentrega):
-		print('{} - {}'.format(c+1, items))
-	print('-=' * 10)
-	diaentrega = int(input('Dia do recebimento: '))
+		while diaentrega > len(daysentrega):
+			diaentrega = int(input('Dia da entrega: '))
+			if diaentrega <= len(daysentrega):
+				break
+		dateentrega = str(input('Data: '))
+		break
+	else:
+		print('-=' * 10)
+		for c, items in enumerate(diasDaSemana):
+			print('{} - {}'.format(c + 1, items))
+		print('-=' * 10)
+		diaentrega = int(input('Dia da retirada: '))
 
-	while diaentrega > len(daysentrega):
-		diaentrega = int(input('Dia da recebimento: '))
-		if diaentrega <= len(daysentrega):
-			break
-	dateentrega = str(input('Data: '))
-	break
+		while diaentrega > len(diasDaSemana):
+			diaentrega = int(input('Dia da retirada: '))
+			if diaentrega <= len(diasDaSemana):
+				break
+		dateentrega = str(input('Data: '))
+		break
 	
 print(' ')
 
@@ -106,7 +122,7 @@ if entrega == 'S':
 
 else:
 	with open('Pedidos.txt', 'w+') as file:
-		file.write(f'{name} {days[fabrication-1]} ({datef})\n• RETIRADA:  *{daysentrega[diaentrega-1]} {dateentrega}*\n• NÚMERO: {number}')
+		file.write(f'{name} {days[fabrication-1]} ({datef})\n• RETIRADA:  *{diasDaSemana[diaentrega-1]} {dateentrega}*\n• NÚMERO: {number}')
 		print('-=' * 10)
 		for c in range(0, qproducts):
 			nameProduct = str(input('Nome do produto: ')).upper()
